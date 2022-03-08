@@ -5,6 +5,9 @@ import me.bcit.ca.world.Cell;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * An abstract class used to construct different types of life forms.
+ */
 public abstract class LifeForm {
 
     private boolean moved;
@@ -15,29 +18,31 @@ public abstract class LifeForm {
         this.cell = cell;
     }
 
+    /**
+     * Used to update the life form. The eat, getMoveDestination, and eat methods are called using polymorphism.
+     * Additionally. similar operations such as checking if the life form has moved has been conducted here to prevent
+     * writing duplicate code in each life form class.
+     */
     public final void update() {
         if (this.moved || this.cell == null) {
             return;
         }
         List<Cell> neighbouringCells = this.cell.getNeighbouringCellsFromWorld();
-        Cell destination = getMoveDestination(neighbouringCells);
-        if (isADestination(destination)) {
-            if (destination.getLifeForm() instanceof Edible) {
-                eat(destination.getLifeForm());
-            }
-            move(destination);
-            this.moved = true;
-        }
+
+        giveBirth(neighbouringCells, createLifeForm());
+        move(neighbouringCells);
+
+        this.moved = true;
     }
 
-    private boolean isADestination(Cell cell) {
-        return cell != null;
-    }
-
+    abstract void giveBirth(final List<Cell> moveLocations, LifeForm lifeForm);
+    abstract LifeForm createLifeForm();
     abstract void eat(LifeForm lifeForm);
-    abstract void move(Cell destination);
-    abstract Cell getMoveDestination(List<Cell> neighbouringCells);
+    abstract void move(final List<Cell> moveLocations);
 
+    /**
+     * Removes the life form from the cell and the cell from the life form.
+     */
     protected void remove() {
         this.cell.setBackground(Cell.defaultColor);
         this.cell.setLifeForm(null);

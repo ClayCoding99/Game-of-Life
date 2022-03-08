@@ -1,4 +1,4 @@
 package me.bcit.ca.entities;
 
-public interface Edible {
+public interface CarnEdible {
 }

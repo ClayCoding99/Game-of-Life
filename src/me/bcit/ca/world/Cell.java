@@ -6,9 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Used to represent a cell in the world. It extends JPanel, so it can be added as a component to the world border
+ * layout.
+ */
 public class Cell extends JPanel implements WorldCell {
 
-    public static final Color defaultColor = Color.WHITE;
+    public static final Color defaultColor;
+
+    static {
+        defaultColor = Color.WHITE;
+    }
 
     private LifeForm lifeForm;
     private final World world;
@@ -16,7 +24,7 @@ public class Cell extends JPanel implements WorldCell {
     private final int cellY;
     private List<Cell> neighbouringCells;
 
-    public Cell(World world, int cellX, int cellY) {
+    public Cell(final World world, final int cellX, final int cellY) {
         this.setBackground(defaultColor);
         this.world = world;
         this.lifeForm = null;
@@ -30,7 +38,7 @@ public class Cell extends JPanel implements WorldCell {
     }
 
     @Override
-    public void setLifeForm(LifeForm lifeForm) {
+    public void setLifeForm(final LifeForm lifeForm) {
         this.lifeForm = lifeForm;
     }
 
@@ -39,6 +47,9 @@ public class Cell extends JPanel implements WorldCell {
         return this.lifeForm != null;
     }
 
+    /**
+     * Updates the life form in the cell if it has one.
+     */
     @Override
     public void update() {
         if (this.hasLifeForm()) {
@@ -48,6 +59,9 @@ public class Cell extends JPanel implements WorldCell {
         }
     }
 
+    /**
+     * Displays the life form in the cell if it has one.
+     */
     @Override
     public void display() {
         if (this.hasLifeForm()) {
@@ -55,8 +69,13 @@ public class Cell extends JPanel implements WorldCell {
         }
     }
 
-    // gets the neighbouring cells from the world. Initially, the cells will be stored in the neighbouring cells
-    // instance variable, so we only have to grab them once from the world for optimization purposes.
+    /**
+     * Used to get the neighbouring cells surrounding this one. To optimize the program and not have to fetch the
+     * neighbouring cells from the world every single turn, they are only gathered from the world the first time
+     * and stored in an instance variable.
+     *
+     * @return neighbouring cells
+     */
     @Override
     public List<Cell> getNeighbouringCellsFromWorld() {
         if (this.neighbouringCells == null) {

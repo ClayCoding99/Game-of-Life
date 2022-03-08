@@ -9,10 +9,13 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
+/**
+ * Driver class for the Game of Life program.
+ */
 public final class Main {
 
-    public static final int WORLD_WIDTH = 25;
-    public static final int WORLD_HEIGHT = 25;
+    public static final int WORLD_WIDTH = 100;
+    public static final int WORLD_HEIGHT = 100;
 
     private static final Toolkit TOOLKIT;
 
@@ -22,6 +25,10 @@ public final class Main {
 
     private Main() {}
 
+    /**
+     * Entry point to the program. Here we initialize the world and set up the window
+     * @param args not used
+     */
     public static void main(final String[] args) {
         final GameFrame frame;
         final World2D world;

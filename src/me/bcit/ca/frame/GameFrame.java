@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Used as a window for the Game of Life.
+ */
 public final class GameFrame extends JFrame {
 
     public static final int WIDTH = 875;
@@ -15,11 +18,14 @@ public final class GameFrame extends JFrame {
     private final World world;
     private final Color bgColor;
 
-    public GameFrame(World world) {
+    public GameFrame(final World world) {
         this.world = world;
         this.bgColor = Color.WHITE;
     }
 
+    /**
+     * Initializes and add the panel made up of the world to the frame.
+     */
     public void init() {
         this.setTitle("Game of Life");
         this.addMouseListener(new TurnListener());
@@ -30,11 +36,18 @@ public final class GameFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Updates the world and then re-renders it.
+     */
     public void takeTurn() {
         world.update();
         world.display();
     }
 
+    /**
+     * This class is a mouse listener for the Game of Life. It is added to the window and will wait for the mouse
+     * to be clicked. Upon clicking the mouse, the takeTurn method will be called.
+     */
     private class TurnListener extends MouseAdapter {
 
         @Override
